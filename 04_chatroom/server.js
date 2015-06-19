@@ -53,7 +53,7 @@ var clientCount = 0;
 
 wsServer.on("request", function(req) {
 
-    var clientID   = req.remoteAddress;
+    var clientID   = parseInt(Date.now()/1000);
     var connection = req.accept("echo-protocol", req.origin);
 
     // let client know about its ID
@@ -95,10 +95,10 @@ wsServer.on("request", function(req) {
     console.log("New client added: "+clientID+" - total: "+clientCount+" clients.");
 
     connection.on("message", function(message) {
-        console.log("Message from client: "+clientID+"\n\t"+message);
+        console.log("Message from client: "+clientID+"\n\t"+message.utf8Data);
 
         // parse and process
-        var data = JSON.parse(message);
+        var data = JSON.parse(message.utf8Data);
 
         var responseData;
         if (typeof clients[data.id] != "undefined") {

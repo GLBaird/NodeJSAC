@@ -1,0 +1,17 @@
+{
+  "name": "expressdemo",
+  "version": "1.0.0",
+  "description": "Simple app to teach express layout",
+  "main": "app.js",
+  "scripts": {
+     "start": "node app.js",
+     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leon Baird",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.4",
+    "log4js": "^0.6.26",
+    "morgan": "^1.6.0"
+  }
+}

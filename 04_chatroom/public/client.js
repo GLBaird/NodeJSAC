@@ -25,7 +25,8 @@ var app = {
     },
 
     setupWebSocket: function() {
-
+        this.ws = new WebSocket(window.location.href.replace("http", "ws"), "echo-protocol");
+        this.ws.addEventListener("message", this.incomingData.bind(this), false);
     },
 
     /**
@@ -39,7 +40,11 @@ var app = {
         this.inputText.value = "";
 
         // send through socket
-
+        var message = JSON.stringify({
+            id: this.clientIdentifier,
+            message: txt
+        });
+        this.ws.send(message);
     },
 
     /**
@@ -57,7 +62,31 @@ var app = {
      * @param id {string} id of client to add or remove
      */
     updateClientList: function(type, id) {
+        if (type == "new") {
+            var option = document.createElement("option");
+            option.setAttribute("value", id);
+            option.appendChild(
+                document.createTextNode(id)
+            );
+            this.clientList.appendChild(option);
+            this.ui.addTextToLogSocket("<i>*** NEW CLIENT "+id+" has joined the chat</i>");
 
+            if (this.clientIdentifier == null) {
+                this.clientIdentifier = id;
+            }
+        } else if (type == "left") {
+            var options = this.clientList.getElementsByTagName("option");
+            for (var i=0; i< options.length; i++) {
+                if (options[i].value == id) {
+                    this.clientList.removeChild(options[i]);
+                    this.ui.addTextToLogSocket("<i>*** "+id+" has left the chat</i>");
+                }
+            }
+        } else if (type == "init") {
+            for (var i in id) {
+                this.updateClientList("new", id[i]);
+            }
+        }
     },
 
     changeClientHandler: function(e) {
@@ -71,7 +100,29 @@ var app = {
      */
     incomingData: function(e) {
         // check data
-
+        var data = JSON.parse(e.data);
+        switch (data.type) {
+            case "clientID":
+                this.identifier = data.message;
+                this.updateClientIdentifier();
+                this.ui.addTextToLogClient("You have joined the chat as "+this.identifier);
+                break;
+            case "newclient":
+                this.updateClientList("new", data.message);
+                break;
+            case "clientlist":
+                this.updateClientList("init", data.message);
+                break;
+            case "message":
+                this.ui.addTextToLogSocket("<b>"+data.clientID+"</b>: "+data.message);
+                break;
+            case "error":
+                this.ui.addTextToLogError("ERROR! "+data.message);
+                break;
+            case "clientleft":
+                this.updateClientList("left", data.message);
+                break;
+        }
     },
 
     /**
