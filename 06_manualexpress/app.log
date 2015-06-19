@@ -1,0 +1,10 @@
+[2015-06-19 16:35:22.923] [INFO] [default] - Server running on localhost:3000
+[2015-06-19 16:35:43.535] [INFO] [default] - Request from IP: ::1 for URL: /data/events
+[2015-06-19 16:35:43.537] [INFO] [default] - Incoming Data Route...
+[2015-06-19 16:35:47.386] [INFO] [default] - Request from IP: ::1 for URL: /data/events
+[2015-06-19 16:35:47.386] [INFO] [default] - Incoming Data Route...
+[2015-06-19 16:35:53.376] [INFO] [default] - Request from IP: ::1 for URL: /data/events
+[2015-06-19 16:35:53.376] [INFO] [default] - Incoming Data Route...
+[2015-06-19 16:48:56.682] [INFO] [default] - Server running on localhost:3000
+[2015-06-19 16:56:03.651] [INFO] [default] - Server running on localhost:3000
+[2015-06-19 17:00:51.727] [INFO] [default] - Server running on localhost:3000
