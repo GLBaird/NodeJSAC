@@ -1,0 +1,24 @@
+extends ./partials/layout
+
+block header
+    h1=pageTitle
+    p welcome to the express forum
+
+block pageContent
+    p userinformation
+    p Posts for #{category}
+    table
+        thead
+            tr
+                th user
+                th date
+                th message
+        tbody
+            each post in posts
+                tr
+                    td=post.userID
+                    td=new Date(post.date*1000).toLocaleDateString()
+                    td #{post.title} <br>#{post.message}
+
+    p
+        a(href="#") add post

@@ -1,0 +1,9 @@
+extends ./partials/layout
+
+block header
+    h1=pageTitle
+    p error report
+
+block pageContent
+    h2=error
+    p information: #{message}

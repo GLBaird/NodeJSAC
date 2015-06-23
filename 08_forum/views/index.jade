@@ -1,0 +1,26 @@
+extends ./partials/layout
+
+block header
+    h1=pageTitle
+    p welcome to the express forum
+
+block pageContent
+    p userinformation
+
+    table
+        thead
+            tr
+                th Category name
+                th number of posts
+                th last posted
+        tbody
+            each category in categories
+                tr
+                    -var id = category._id
+                    td #[a(href="/posts/#{id}") #{id}]
+                    td=category.posts
+                    -var fd = new Date(category.last*1000).toLocaleDateString()
+                    td=fd
+
+    p
+        a(href="#") add post
